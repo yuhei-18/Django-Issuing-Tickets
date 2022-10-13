@@ -1,4 +1,5 @@
 from django.views.generic import TemplateView
+from .models import Ticket
 
 
 class Index(TemplateView):
@@ -6,5 +7,5 @@ class Index(TemplateView):
 
     def get_context_data(self):
         context = super().get_context_data()
-        context["message"] = "Hey"
+        context["tickets"] = Ticket.objects.all()
         return context
