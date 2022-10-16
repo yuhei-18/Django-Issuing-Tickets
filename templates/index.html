@@ -2,29 +2,36 @@
 
 {% block main %}
 
-    <div class="flex flex-row">
+    <div class="flex flex-row font-mono bg-slate-100 h-screen">
         <div class="basis-1/6"></div>
-        <div class="flex flex-row basis-4/6">
+        <div class="flex flex-row basis-4/6 mt-8">
             <div class="basis-2/5">
-                <div class="rounded-lg border-2 border-slate-300 m-8">
+                <div class="rounded-lg border-4 border-yellow-300 mx-16 bg-slate-50">
                     <div class="text-center m-4">
-                        <div class="w-24 h-24 mx-auto p-auto bg-slate-400 rounded-full flex justify-center items-center ">
+                        <div class="w-24 h-24 mx-auto p-auto bg-slate-700 rounded-full flex justify-center items-center ">
                             <p class="text-xl font-bold text-white">画像</p>
                         </div>
-                        <p class="text-lg mt-2">@{{ user }}</p>
+                        <p class="text-lg mt-2">{{ user }}</p>
                     </div>
                 </div>
             </div>
             <div class="basis-3/5">
-                <h1>{{ user }}</h1>
                 {% for ticket in tickets %}
-                    <h2>{{ ticket.title }}</h2>
-                    <p>{{ ticket.created_at }}</p>
-                    <p>{{ ticket.target_date }}</p>
-                    <p>{{ ticket.is_approval }}</p>
-                    <p>{{ ticket.is_done }}</p>
-                    <p>{{ ticket.from_user }}</p>
-                    <p>{{ ticket.to_user }}</p>
+                    <div class="flex mb-8">
+                        <div class="border-r-2 border-yellow-200 bg-yellow-300 w-72 pl-2">
+                            <div class="h-24">
+                                <p class="text-sm ml-2 pt-6">{{ ticket.target_date|date:"Y-n-j" }}</p>
+                                <h2 class="text-3xl font-medium ml-2">{{ ticket.title }}</h2>
+                            </div>
+                            <div class="flex ml-2 pb-2">
+                                <p class="mr-4"> FROM {{ ticket.from_user }}</p>
+                                <p>TO {{ ticket.to_user }}</p>
+                            </div>
+                        </div>
+                        {% if not ticket.is_done %}
+                            <div class="border-l-2 border-yellow-200 w-8 bg-yellow-300"></div>
+                        {% endif %}
+                    </div>
                 {% endfor %}
             </div>
         </div>
