@@ -1,11 +1,7 @@
-from django.views.generic import TemplateView
+from django.shortcuts import render
 from .models import Ticket
 
 
-class Index(TemplateView):
-    template_name = "index.html"
-
-    def get_context_data(self):
-        context = super().get_context_data()
-        context["tickets"] = Ticket.objects.all()
-        return context
+def index(request):
+    tickets = Ticket.objects.all()
+    return render(request, "index.html", {"tickets": tickets})
