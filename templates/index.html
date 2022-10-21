@@ -17,7 +17,7 @@
             </div>
             <div class="basis-3/5">
                 {% for ticket in tickets %}
-                    <div class="flex mb-8">
+                    <div class="flex mb-8 ml-16">
                         <div class="border-y-2 border-l-2 border-slate-700 bg-yellow-300 w-72 pl-2">
                             <div class="h-24">
                                 <p class="text-sm ml-2 pt-6">{{ ticket.target_date|date:"Y-n-j" }}</p>
@@ -39,6 +39,7 @@
                 {% endfor %}
             </div>
         </div>
+        <div class="basis-1/6"></div>
     </div>
 
 {% endblock %}
