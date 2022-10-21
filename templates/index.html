@@ -4,9 +4,9 @@
 
     <div class="flex flex-row">
         <div class="basis-1/6"></div>
-        <div class="flex flex-row basis-4/6 mt-8">
+        <div class="flex flex-row basis-4/6 mt-32">
             <div class="basis-2/5">
-                <div class="rounded-lg border-2 border-slate-700 mx-16 bg-slate-50">
+                <div class="rounded-lg border-2 border-slate-700 bg-slate-50 fixed w-64">
                     <div class="text-center m-4">
                         <div class="w-24 h-24 mx-auto p-auto bg-slate-700 rounded-full flex justify-center items-center border-4 border-yellow-300">
                             <p class="text-xl font-bold text-white">画像</p>
@@ -17,25 +17,28 @@
             </div>
             <div class="basis-3/5">
                 {% for ticket in tickets %}
-                    <div class="flex mb-8 ml-16">
-                        <div class="border-y-2 border-l-2 border-slate-700 bg-yellow-300 w-72 pl-2">
-                            <div class="h-24">
-                                <p class="text-sm ml-2 pt-6">{{ ticket.target_date|date:"Y-n-j" }}</p>
-                                <h2 class="text-3xl font-medium ml-2">{{ ticket.title }}</h2>
+                    <form method="post" name="ss">
+                        {% csrf_token %}
+                        <div class="flex mb-8 ml-16">
+                            <div class="border-y-2 border-l-2 border-slate-700 bg-yellow-300 w-72 pl-2">
+                                <div class="h-24">
+                                    <p class="text-sm ml-2 pt-6">{{ ticket.target_date|date:"Y-n-j" }}</p>
+                                    <p class="text-3xl font-medium ml-2">{{ ticket.title }}</p>
+                                </div>
+                                <div class="flex ml-2 pb-2">
+                                    <p class="pr-4 border-b-2 border-slate-700"> FROM {{ ticket.from_user }}</p>
+                                    <p class="border-b-2 border-slate-700">TO {{ ticket.to_user }}</p>
+                                </div>
                             </div>
-                            <div class="flex ml-2 pb-2">
-                                <p class="pr-4 border-b-2 border-slate-700"> FROM {{ ticket.from_user }}</p>
-                                <p class="border-b-2 border-slate-700">TO {{ ticket.to_user }}</p>
-                            </div>
+                            <div class="border-l-2 border-dashed border-slate-700"></div>
+                            {% if not ticket.is_done %}
+                                <input type="submit" value="" name="{{ ticket.title }}" class="border-y-2 border-r-2 border-slate-700 w-8 bg-yellow-300">
+                            {% else %}
+                                <div class="border-l-2 border-dashed border-slate-700 ml-8"></div>
+                                <input type="submit" value="" name="{{ ticket.title }}" class="border-y-2 border-r-2 border-slate-700 w-8 bg-yellow-300">
+                            {% endif %}
                         </div>
-                        <div class="border-l-2 border-dashed border-slate-700"></div>
-                        {% if not ticket.is_done %}
-                            <div class="border-y-2 border-r-2 border-slate-700 w-8 bg-yellow-300"></div>
-                        {% else %}
-                            <div class="border-l-2 border-dashed border-slate-700 ml-8"></div>
-                            <div class="border-y-2 border-r-2 border-slate-700 w-8 bg-yellow-300"></div>
-                        {% endif %}
-                     </div>
+                    </form>
                 {% endfor %}
             </div>
         </div>
